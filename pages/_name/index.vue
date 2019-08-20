@@ -1,13 +1,13 @@
 <template>
   <section id="page-index">
-    <div class="logo is-relative fix-1024" :class="brandName">
+    <div class="logo is-relative fix-400" :class="brandName">
       <img
-        class="image is-64x64 is-inline-block logo--image"
+        class="image is-70x70 is-inline-block logo--image"
         :src="$store.state.brandLogo"
         alt="logo"
       >
       <span
-        class="image is-64x64 is-size-5 logo--text"
+        class="image is-70x70 is-size-5 logo--text"
         style="letter-spacing: -1px;"
       >
         Way of life!
@@ -30,18 +30,18 @@
         </div>
       </div>
     </section>
-    <section class="section small-padding fix-1024" style="padding-bottom: .75rem;">
+    <section class="section is-paddingless fix-400" style="padding-bottom: .75rem;">
       <div class="field">
-        <div class="control">
+        <div class="control small-margin">
           <span class="icon is-large is-size-4">
             <font-awesome-icon icon="paper-plane" class="color-skyblue" />
           </span>
           <h3
-            class="title is-size-3 is-inline-block padding-left-1 color-skyblue"
+            class="title is-4 is-inline-block is-marginless color-skyblue"
           >
             Vis nærmeste først
           </h3>
-          <span class="is-pulled-right" style="padding-top: 1rem;" @click="test">
+          <span class="is-pulled-right" style="padding-top: 1rem;">
             <input
               id="isDistanceSort"
               ref="sortChecker"
@@ -56,10 +56,10 @@
         </div>
       </div>
       <div class="field">
-        <div class="control has-icons-left">
+        <div class="control has-icons-left small-margin">
           <input
             v-model="zipCode"
-            class="input is-large is-size-4"
+            class="input is-large is-4"
             type="text"
             placeholder="Indtast postnummer"
           >
@@ -69,7 +69,7 @@
         </div>
       </div>
     </section>
-    <section class="section no-padding-top fix-1024">
+    <section class="section is-paddingless no-padding-top fix-400">
       <ul class="list">
         <li
           v-for="(item, index) in appList"
@@ -254,6 +254,7 @@ export default {
 <style lang="scss" scoped>
   @import '../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css';
   #page-index {
+    margin-bottom: 25rem;
     .logo {
       &--image {
         position: absolute;
@@ -287,6 +288,28 @@ export default {
     .pagination {
       justify-content: center;
       font-size: 1.4rem;
+      margin: 1.5rem;
     }
+
+    .list {
+      box-shadow: none;
+    }
+  }
+
+  .is-2 {
+    font-size: 2.4rem;
+  }
+  .is-3 {
+    font-size: 1.8rem;
+  }
+  .is-4 {
+    font-size: 1.4rem;
+  }
+  .is-70x70 {
+    width: 70px;
+    height: 70px;
+  }
+  .small-margin {
+    margin: 1.5rem;
   }
 </style>

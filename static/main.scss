@@ -38,20 +38,6 @@ body {
   padding-top: 0 !important;
 }
 
-.padding-right-1 {
-  padding-right: 1rem;
-}
-.padding-right-2 {
-  padding-right: 2rem;
-}
-
-.padding-left-1 {
-  padding-left: 1rem;
-}
-.padding-left-2 {
-  padding-left: 2rem;
-}
-
 .color-skyblue {
   color: $skyblue;
 }
@@ -63,9 +49,9 @@ body {
   background-color: $bg-darkblue;
 }
 
-@media screen and (min-width: 1024px) {
-  .fix-1024 {
-    width: 1024px;
+@media screen and (min-width: 400px) {
+  .fix-400 {
+    width: 400px;
     margin: auto;
   }
 }
@@ -73,7 +59,7 @@ body {
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 .fade-enter-to, .fade-leave {

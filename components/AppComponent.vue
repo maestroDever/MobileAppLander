@@ -1,27 +1,18 @@
 <template>
-  <div class="columns is-mobile is-tablet" style="cursor: pointer;">
-    <div class="column is-one-quarter is-hidden-tablet">
+  <div class="columns is-mobile" style="cursor: pointer;">
+    <div class="image-wrapper">
       <figure class="image">
         <img
-          class="image"
+          class="image is-60x60"
           :src="appItem.app_icon"
-          alt="logo"
+          :alt="appItem.app_name"
         >
       </figure>
     </div>
-    <div class="column is-hidden-mobile is-2">
-      <figure class="image">
-        <img
-          class="image"
-          :src="appItem.app_icon"
-          alt="logo"
-        >
-      </figure>
-    </div>
-    <div class="column">
+    <div class="container">
       <h3 class="title">
         {{ appItem.app_name }}
-        <span class="icon is-pulled-right">
+        <span class="icon is-pulled-right" style="color: #C7C7CC;">
           <font-awesome-icon icon="angle-right" class="is-size-2" />
         </span>
       </h3>
@@ -29,7 +20,7 @@
         {{ appItem.company_name }}
         <br>
         {{ appItem.department_info.zip }}
-        {{ appItem.department_info.address }}
+        <!-- {{ appItem.department_info.address }} -->
         {{ appItem.department_info.city }}
         <span v-if="showDistance" class="is-pulled-right">
           {{ appItem.distance | toFixed }}km
@@ -61,6 +52,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .image-wrapper {
+    margin: 1.4rem;
+  }
+
+  .container {
+    margin: 1.7rem;
+    margin-left: 0;
+  }
+
   .title {
     color: #003145;
     font-size: 1.6rem;
@@ -71,5 +71,10 @@ export default {
     color: #323232;
     font-size: 13px;
     line-height: 16px;
+  }
+
+  .is-60x60 {
+    width: 6rem;
+    height: 6rem;
   }
 </style>
