@@ -20,7 +20,6 @@
     </div>
     <div class="column">
       <h3 class="title">
-        <!-- Bilforhandler A/S -->
         {{ appItem.app_name }}
         <span class="icon is-pulled-right">
           <font-awesome-icon icon="angle-right" class="is-size-2" />
@@ -62,5 +61,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .title {
+    color: #003145;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+  }
 
+  .subtitle {
+    color: #323232;
+    font-size: 13px;
+    line-height: 16px;
+  }
 </style>
