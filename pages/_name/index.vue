@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="field">
-        <div class="control has-icons-left small-margin">
+        <div class="control has-icons-left has-icons-right small-margin">
           <input
             v-model="zipCode"
             class="input is-large is-4"
@@ -66,6 +66,10 @@
           <span class="icon is-large is-size-4 is-left">
             <font-awesome-icon icon="search" class="color-skyblue" />
           </span>
+          <span class="icon is-large is-size-4 is-right">
+            <font-awesome-icon icon="times-circle" class="gray" />
+          </span>
+          <div id="clear-zip" @click="zipCode = ''" />
         </div>
       </div>
     </section>
@@ -311,5 +315,14 @@ export default {
   }
   .small-margin {
     margin: 1.5rem;
+  }
+
+  #clear-zip {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
   }
 </style>
