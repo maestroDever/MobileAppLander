@@ -259,6 +259,7 @@ export default {
     .buttons {
       justify-content: center;
       margin: auto;
+      padding: 2rem 0;
 
       img {
         margin: 1rem;
