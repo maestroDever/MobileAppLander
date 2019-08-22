@@ -66,10 +66,9 @@
           <span class="icon is-large is-size-4 is-left">
             <font-awesome-icon icon="search" class="color-skyblue" />
           </span>
-          <span class="icon is-large is-size-4 is-right">
-            <font-awesome-icon icon="times-circle" class="gray" />
+          <span class="icon is-right">
+            <button class="delete is-small" @click="zipCode = ''" />
           </span>
-          <div id="clear-zip" @click="zipCode = ''" />
         </div>
       </div>
     </section>
@@ -310,14 +309,5 @@ export default {
   }
   .small-margin {
     margin: 1.5rem;
-  }
-
-  #clear-zip {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
   }
 </style>
