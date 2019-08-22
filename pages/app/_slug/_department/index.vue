@@ -278,7 +278,7 @@ export default {
     background-color: #111;
     color: #fff;
     text-align: center;
-    padding: 1rem 1.5rem 20rem;
+    padding: 3.6rem 1.5rem 20rem;
 
     .text {
       @media screen and (min-width: 360px) {
