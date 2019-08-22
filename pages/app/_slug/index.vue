@@ -251,9 +251,10 @@ export default {
     }
 
     .description {
-      @media screen and (min-width: 400px) {
-        width: 40rem;
-      }
+      max-width: 40rem;
+      white-space: pre-wrap;
+      text-align: left;
+      tab-size: 4;
     }
 
     .buttons {
