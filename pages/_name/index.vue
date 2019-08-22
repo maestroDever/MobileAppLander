@@ -245,11 +245,6 @@ export default {
           name: this.brandName,
           pageNum
         })
-    },
-    test () {
-      if (this.$refs.sortChecker.hasAttribute('disabled')) {
-        alert('Please allow browser to detect your location')
-      }
     }
   }
 }
