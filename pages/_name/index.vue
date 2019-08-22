@@ -226,7 +226,7 @@ export default {
       const deviceType = this.$store.state.deviceType
       switch (deviceType) {
         case 'Desktop':
-          this.$router.push(`/app/${appItem.app_slug}`)
+          this.$router.push(`/app/${appItem.app_slug}/${appItem.department_id}`)
           break
         case 'Apple':
           window.location.href = appItem.app_store_link
