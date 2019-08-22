@@ -85,6 +85,11 @@
             :show-distance="isSortbyDistance"
           />
         </li>
+        <li class="list-item is-relative has-text-centered is-size-4">
+          <div v-if="appList.length === 0" class="notification is-large">
+            Din søgning gav intet resultat
+          </div>
+        </li>
       </ul>
     </section>
     <v-pagination
