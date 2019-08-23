@@ -161,6 +161,16 @@ export default {
       }
     } else if (this.$device.isDesktop) { deviceType = 'Desktop' }
     this.deviceType = deviceType
+
+    if (!this.$route.query.hasOwnProperty('show')) {
+      this.$nextTick(function () {
+        if (this.deviceType === 'Apple') {
+          window.location.href = this.appItem.app_store_link
+        } else if (this.deviceType === 'Android') {
+          window.location.href = this.appItem.google_play_link
+        }
+      })
+    }
   },
   methods: {
     setQR (val) {
