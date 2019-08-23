@@ -231,6 +231,8 @@ export default {
         .is-80x80 {
           width: 80px;
           height: 80px;
+          border-radius: 5px;
+          box-shadow: 1px 4px 12px 1px rgba(0, 0, 0, 0.7);
         }
         .app-name {
           font-size: 1.6rem;
