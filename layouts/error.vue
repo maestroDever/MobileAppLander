@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container has-text-centered">
     <div class="notification">
       <h1 v-if="error.statusCode === 404" class="is-size-1">
         {{ error.message }}
@@ -25,5 +25,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     max-width: 40rem;
+    height: 100vh;
+    background-color: whitesmoke;
   }
 </style>
