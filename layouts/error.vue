@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <h1 v-if="error.statusCode === 404">
-      {{ error.message }}
-    </h1>
+  <div class="container">
+    <div class="notification">
+      <h1 v-if="error.statusCode === 404" class="is-size-1">
+        {{ error.message }}
+      </h1>
+    </div>
   </div>
 </template>
 
@@ -18,5 +20,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 40rem;
+  }
 </style>
