@@ -110,7 +110,7 @@ export default {
         return { appItem: res.data }
       })
       .catch((e) => {
-        error({ statusCode: 404, message: 'Page not found' })
+        error({ statusCode: 404, message: 'App not found' })
       })
   },
   head () {
