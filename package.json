@@ -4,6 +4,9 @@
   "description": "Finding Mobile Apps - Landing Page for Auto Apps",
   "author": "Artem Pavlov",
   "private": true,
+  "engines": {
+    "node": "10.3.0"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
