@@ -1,23 +1,18 @@
 <template>
   <section id="page-index">
-    <div class="logo is-relative fix-400" :class="brandName">
+    <div class="logo is-relative fix-400">
       <img
-        class="image is-70x70 is-inline-block logo--image"
-        :src="$store.state.brandLogo"
+        class="image is-inline-block logo--image"
+        :class="brandName"
+        :src="brandName === 'suzuki' ? '/graphics_suzuki_logo.png' : brandLogo"
         alt="logo"
       >
-      <span
-        class="image is-70x70 is-size-5 logo--text"
-        style="letter-spacing: -1px;"
-      >
-        Way of life!
-      </span>
     </div>
     <section class="hero is-primary" :class="brandName">
       <div class="hero-head bg-darkblue" />
       <div class="hero-body has-text-centered bg-skyblue">
         <div class="container">
-          <h1 class="title is-2">
+          <h1 v-if="brandName === 'suzuki'" class="title is-2">
             78 forhandlere i hele landet
           </h1>
         </div>
@@ -262,15 +257,16 @@ export default {
       &--image {
         position: absolute;
         left: .5rem;
-      }
-      &--text {
-        position: absolute;
-        left: 6.9rem;
-        background-color: #0a3145;
-        color: #fff;
-        text-align: center;
-        line-height: 6.4rem;
-        font-weight: 700;
+        height: 6.2rem;
+
+        &:not(.suzuki) {
+          width: 6.2rem;
+          height: 6.2rem;
+          left: 50%;
+          top: 7rem;
+          transform: translate(-50%, -50%);
+          box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+        }
       }
     }
     .hero {
@@ -281,11 +277,28 @@ export default {
       &-foot {
         .subtitle {
           line-height: 5rem;
+          font-weight: 700;
         }
       }
     }
-    .Suzuki {
+    .suzuki {
       font-family: "SuzukiPRORegular";
+    }
+
+    .hero:not(.suzuki) {
+      .hero-head,
+      .hero-body {
+        background-color: #fff;
+      }
+
+      .hero-body {
+        height: 8.7rem;
+      }
+
+      .hero-foot {
+        background-color: #000;
+        color: #fff;
+      }
     }
 
     .pagination {
