@@ -104,10 +104,13 @@ export default {
       return this.appItem.google_play_link && this.appItem.google_play_link.match(/id=([^&]+)/g)[0]
     }
   },
-  asyncData ({ params }) {
+  asyncData ({ params, error }) {
     return axios.get('http://139.162.255.138/backend/api/landing/apps/' + params.slug)
       .then((res) => {
         return { appItem: res.data }
+      })
+      .catch((e) => {
+        error({ statusCode: 404, message: 'Page not found' })
       })
   },
   head () {

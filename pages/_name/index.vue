@@ -137,12 +137,15 @@ export default {
       })
     }
   },
-  asyncData ({ params }) {
+  asyncData ({ params, error }) {
     return axios.get(`http://139.162.255.138/backend/api/landing/${params.name}/apps`)
       .then((res) => {
         return {
           brandLogo: res.data.brand_logo
         }
+      })
+      .catch((e) => {
+        error({ statusCode: 404, message: 'Page not found' })
       })
   },
   head () {
