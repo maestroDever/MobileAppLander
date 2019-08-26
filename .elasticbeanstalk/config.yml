@@ -1,19 +1,22 @@
 branch-defaults:
   deployment:
-    environment: autoapps-landing-dev
+    environment: AutoAppslandingpageSSR-dev
+    group_suffix: null
 environment-defaults:
   AutoappsLandingPageSsr-env:
     branch: null
     repository: null
 global:
   application_name: AutoApps landing page (SSR)
-  default_ec2_keyname: null
+  branch: null
+  default_ec2_keyname: aws-eb
   default_platform: Node.js
   default_region: eu-central-1
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
-  profile: eb-deploy-user
+  profile: null
+  repository: null
   sc: git
   workspace_type: Application
