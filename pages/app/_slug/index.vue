@@ -105,7 +105,7 @@ export default {
     }
   },
   asyncData ({ params, error }) {
-    return axios.get('http://139.162.255.138/backend/api/landing/apps/' + params.slug)
+    return axios.get('https://app.autoapps.dk/backend/api/landing/apps/' + params.slug)
       .then((res) => {
         return { appItem: res.data }
       })
