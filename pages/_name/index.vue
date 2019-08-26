@@ -289,7 +289,7 @@ export default {
       }
     }
     .suzuki {
-      font-family: "SuzukiPRORegular";
+      font-family: "SuzukiPROHeadline";
     }
 
     .hero:not(.suzuki) {
