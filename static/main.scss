@@ -83,3 +83,11 @@ input:focus,
 button:focus {
   outline: none;
 }
+
+.blocked-notification {
+  display: none;
+  font-size: 12px;
+}
+.toggle-distance-sort:hover + div.blocked-notification {
+  display: block;
+}

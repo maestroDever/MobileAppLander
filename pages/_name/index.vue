@@ -36,7 +36,7 @@
           >
             Vis nærmeste først
           </h3>
-          <span class="is-pulled-right" style="padding-top: 1rem;">
+          <span class="is-pulled-right toggle-distance-sort" style="padding-top: 1rem;">
             <input
               id="isDistanceSort"
               ref="sortChecker"
@@ -48,6 +48,9 @@
             >
             <label for="isDistanceSort" />
           </span>
+          <div v-if="!$store.state.myLocation.latitude" class="blocked-notification">
+            Geolocation is blocked. To use sort functionality, you will have to first enable Geolocation on the browser.
+          </div>
         </div>
       </div>
       <div class="field">
