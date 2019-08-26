@@ -1,23 +1,18 @@
 <template>
   <section id="page-index">
-    <div class="logo is-relative fix-1024" :class="brandName">
+    <div class="logo is-relative fix-400">
       <img
-        class="image is-64x64 is-inline-block logo--image"
-        :src="$store.state.brandLogo"
+        class="image is-inline-block logo--image"
+        :class="brandName"
+        :src="brandName === 'suzuki' ? '/graphics_suzuki_logo.png' : brandLogo"
         alt="logo"
       >
-      <span
-        class="image is-64x64 is-size-5 logo--text"
-        style="letter-spacing: -1px;"
-      >
-        Way of life!
-      </span>
     </div>
     <section class="hero is-primary" :class="brandName">
       <div class="hero-head bg-darkblue" />
       <div class="hero-body has-text-centered bg-skyblue">
         <div class="container">
-          <h1 class="title is-2">
+          <h1 v-if="brandName === 'suzuki'" class="title is-2">
             78 forhandlere i hele landet
           </h1>
         </div>
@@ -30,18 +25,18 @@
         </div>
       </div>
     </section>
-    <section class="section small-padding fix-1024" style="padding-bottom: .75rem;">
+    <section class="section is-paddingless fix-400" style="padding-bottom: .75rem;">
       <div class="field">
-        <div class="control">
+        <div class="control small-margin">
           <span class="icon is-large is-size-4">
             <font-awesome-icon icon="paper-plane" class="color-skyblue" />
           </span>
           <h3
-            class="title is-size-3 is-inline-block padding-left-1 color-skyblue"
+            class="title is-4 is-inline-block is-marginless color-skyblue"
           >
             Vis nærmeste først
           </h3>
-          <span class="is-pulled-right" style="padding-top: 1rem;" @click="test">
+          <span class="is-pulled-right" style="padding-top: 1rem;">
             <input
               id="isDistanceSort"
               ref="sortChecker"
@@ -56,20 +51,23 @@
         </div>
       </div>
       <div class="field">
-        <div class="control has-icons-left">
+        <div class="control has-icons-left has-icons-right small-margin">
           <input
             v-model="zipCode"
-            class="input is-large is-size-4"
+            class="input is-large is-4"
             type="text"
             placeholder="Indtast postnummer"
           >
           <span class="icon is-large is-size-4 is-left">
             <font-awesome-icon icon="search" class="color-skyblue" />
           </span>
+          <span class="icon is-right">
+            <button class="delete is-small" @click="zipCode = ''" />
+          </span>
         </div>
       </div>
     </section>
-    <section class="section no-padding-top fix-1024">
+    <section class="section is-paddingless no-padding-top fix-400">
       <ul class="list">
         <li
           v-for="(item, index) in appList"
@@ -81,6 +79,11 @@
             :app-item="item"
             :show-distance="isSortbyDistance"
           />
+        </li>
+        <li class="list-item is-relative has-text-centered is-size-4">
+          <div v-if="appList.length === 0" class="notification is-large">
+            Din søgning gav intet resultat
+          </div>
         </li>
       </ul>
     </section>
@@ -134,12 +137,19 @@ export default {
       })
     }
   },
-  asyncData ({ params }) {
+  asyncData ({ params, error }) {
     return axios.get(`http://139.162.255.138/backend/api/landing/${params.name}/apps`)
       .then((res) => {
+        console.log(res.data)
+        if (!res.data.total) {
+          error({ statusCode: 404, message: 'Page not found' })
+        }
         return {
           brandLogo: res.data.brand_logo
         }
+      })
+      .catch((e) => {
+        error({ statusCode: 404, message: 'Page not found' })
       })
   },
   head () {
@@ -218,7 +228,7 @@ export default {
       const deviceType = this.$store.state.deviceType
       switch (deviceType) {
         case 'Desktop':
-          this.$router.push(`/app/${appItem.app_slug}`)
+          this.$router.push(`/app/${appItem.app_slug}/${appItem.department_id}`)
           break
         case 'Apple':
           window.location.href = appItem.app_store_link
@@ -241,11 +251,6 @@ export default {
           name: this.brandName,
           pageNum
         })
-    },
-    test () {
-      if (this.$refs.sortChecker.hasAttribute('disabled')) {
-        alert('Please allow browser to detect your location')
-      }
     }
   }
 }
@@ -254,19 +259,21 @@ export default {
 <style lang="scss" scoped>
   @import '../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css';
   #page-index {
+    margin-bottom: 25rem;
     .logo {
       &--image {
         position: absolute;
         left: .5rem;
-      }
-      &--text {
-        position: absolute;
-        left: 6.9rem;
-        background-color: #0a3145;
-        color: #fff;
-        text-align: center;
-        line-height: 6.4rem;
-        font-weight: 700;
+        height: 6.2rem;
+
+        &:not(.suzuki) {
+          width: 6.2rem;
+          height: 6.2rem;
+          left: 50%;
+          top: 7rem;
+          transform: translate(-50%, -50%);
+          box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+        }
       }
     }
     .hero {
@@ -277,16 +284,55 @@ export default {
       &-foot {
         .subtitle {
           line-height: 5rem;
+          font-weight: 700;
         }
       }
     }
-    .Suzuki {
+    .suzuki {
       font-family: "SuzukiPRORegular";
+    }
+
+    .hero:not(.suzuki) {
+      .hero-head,
+      .hero-body {
+        background-color: #fff;
+      }
+
+      .hero-body {
+        height: 8.7rem;
+      }
+
+      .hero-foot {
+        background-color: #000;
+        color: #fff;
+      }
     }
 
     .pagination {
       justify-content: center;
       font-size: 1.4rem;
+      margin: 1.5rem;
     }
+
+    .list {
+      box-shadow: none;
+    }
+  }
+
+  .is-2 {
+    font-size: 2.4rem;
+  }
+  .is-3 {
+    font-size: 1.8rem;
+  }
+  .is-4 {
+    font-size: 1.4rem;
+  }
+  .is-70x70 {
+    width: 70px;
+    height: 70px;
+  }
+  .small-margin {
+    margin: 1.5rem;
   }
 </style>

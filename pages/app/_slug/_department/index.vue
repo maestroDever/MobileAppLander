@@ -104,10 +104,13 @@ export default {
       return this.appItem.google_play_link && this.appItem.google_play_link.match(/id=([^&]+)/g)[0]
     }
   },
-  asyncData ({ params }) {
+  asyncData ({ params, error }) {
     return axios.get('http://139.162.255.138/backend/api/landing/apps/' + params.slug + '?department_id=' + params.department)
       .then((res) => {
         return { appItem: res.data }
+      })
+      .catch((e) => {
+        error({ statusCode: 404, message: 'App not found' })
       })
   },
   head () {
@@ -161,6 +164,16 @@ export default {
       }
     } else if (this.$device.isDesktop) { deviceType = 'Desktop' }
     this.deviceType = deviceType
+
+    if (!this.$route.query.hasOwnProperty('show')) {
+      this.$nextTick(function () {
+        if (this.deviceType === 'Apple') {
+          window.location.href = this.appItem.app_store_link
+        } else if (this.deviceType === 'Android') {
+          window.location.href = this.appItem.google_play_link
+        }
+      })
+    }
   },
   methods: {
     setQR (val) {
@@ -218,6 +231,8 @@ export default {
         .is-80x80 {
           width: 80px;
           height: 80px;
+          border-radius: 5px;
+          box-shadow: 1px 4px 12px 1px rgba(0, 0, 0, 0.7);
         }
         .app-name {
           font-size: 1.6rem;
@@ -251,14 +266,16 @@ export default {
     }
 
     .description {
-      @media screen and (min-width: 400px) {
-        width: 40rem;
-      }
+      max-width: 40rem;
+      white-space: pre-wrap;
+      text-align: left;
+      tab-size: 4;
     }
 
     .buttons {
       justify-content: center;
       margin: auto;
+      padding: 2rem 0;
 
       img {
         margin: 1rem;
@@ -276,7 +293,7 @@ export default {
     background-color: #111;
     color: #fff;
     text-align: center;
-    padding: 1rem 1.5rem 20rem;
+    padding: 3.6rem 1.5rem 20rem;
 
     .text {
       @media screen and (min-width: 360px) {
