@@ -1,6 +1,6 @@
 branch-defaults:
   deployment:
-    environment: AutoAppsLanding-dev
+    environment: AutoAppslandingpageSSR-dev
     group_suffix: null
 environment-defaults:
   AutoAppsLanding-dev:
