@@ -90,6 +90,7 @@
       </ul>
     </section>
     <v-pagination
+      v-if="appList.length"
       v-model="curPage"
       :page-count="pageCount"
       @input="gotoPage"
