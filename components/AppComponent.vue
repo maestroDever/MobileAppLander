@@ -17,10 +17,10 @@
         </span>
       </h3>
       <p class="subtitle">
-        {{ appItem.company_name }}
+        <!-- {{ appItem.company_name }} -->
+        {{ appItem.department_info.address }}
         <br>
         {{ appItem.department_info.zip }}
-        <!-- {{ appItem.department_info.address }} -->
         {{ appItem.department_info.city }}
         <span v-if="showDistance" class="is-pulled-right">
           {{ appItem.distance | distanceFilter }}
