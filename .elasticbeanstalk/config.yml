@@ -3,7 +3,7 @@ branch-defaults:
     environment: AutoAppsLanding-dev
     group_suffix: null
 environment-defaults:
-  AutoappsLandingPageSsr-env:
+  AutoAppsLanding-dev:
     branch: null
     repository: null
 global:
