@@ -92,3 +92,6 @@ sw.*
 
 # Code editor files
 .vscode
+
+# Elastic beanstalk
+!.elasticbeanstalk/config.yml
