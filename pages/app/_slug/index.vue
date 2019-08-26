@@ -2,6 +2,7 @@
   <section class="section is-paddingless has-text-centered app-wrapper">
     <div class="body">
       <div class="app-image-wrapper">
+        <div class="iphone-background"></div>
         <figure class="image">
           <!-- <img v-if="window.width >= 640" src="/graphics_iphone_2x.png" alt="iPhone-Frame"> -->
           <img src="/graphics_iphone.png" alt="iPhone-Frame">
@@ -189,8 +190,20 @@ export default {
 
 <style lang="scss" scoped>
   .app-image-wrapper {
+    position: relative;
     background-image: url('/tires.png');
-
+    background-position: top center;
+    .iphone-background{
+      position: absolute;
+      display: block;
+      top: 92px;
+      width: 255px;
+      right: 0;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      background: black;
+    }
     .image {
       position: relative;
       overflow: hidden;
@@ -232,6 +245,7 @@ export default {
           width: 80px;
           height: 80px;
           border-radius: 5px;
+          background: white;
           box-shadow: 1px 4px 12px 1px rgba(0, 0, 0, 0.7);
         }
         .app-name {
