@@ -23,7 +23,7 @@
         <!-- {{ appItem.department_info.address }} -->
         {{ appItem.department_info.city }}
         <span v-if="showDistance" class="is-pulled-right">
-          {{ appItem.distance | toFixed }}km
+          {{ appItem.distance | distanceFilter }}
         </span>
       </p>
     </div>
@@ -34,8 +34,11 @@
 export default {
   name: 'AppComponent',
   filters: {
-    toFixed (value) {
-      if (value !== null) { return value.toFixed(2) }
+    distanceFilter (value) {
+      if (value !== null) {
+        if (value < 1) { value = value * 1000 + 'm' } else { value = Math.round(value) + 'km' }
+        return value
+      }
     }
   },
   props: {
