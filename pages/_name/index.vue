@@ -55,8 +55,10 @@
           <input
             v-model="zipCode"
             class="input is-large is-4"
-            type="text"
+            type="number"
+            maxlength="4"
             placeholder="Indtast postnummer"
+            @input="restrictInput"
           >
           <span class="icon is-large is-size-4 is-left">
             <font-awesome-icon icon="search" class="color-skyblue" />
@@ -251,6 +253,12 @@ export default {
           name: this.brandName,
           pageNum
         })
+    },
+    restrictInput (evt) {
+      if (this.zipCode.length > 4) {
+        evt.preventDefault()
+        this.zipCode = this.zipCode.slice(0, 4)
+      }
     }
   }
 }
