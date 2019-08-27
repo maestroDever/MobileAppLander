@@ -4,7 +4,7 @@
       <figure class="image">
         <img
           class="image is-60x60"
-          :src="appItem.app_icon"
+          :src="appItem.app_icon.replace('http:', '')"
           :alt="appItem.app_name"
         >
       </figure>
