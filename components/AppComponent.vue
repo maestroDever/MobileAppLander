@@ -36,7 +36,7 @@ export default {
   filters: {
     distanceFilter (value) {
       if (value !== null) {
-        if (value < 1) { value = value * 1000 + 'm' } else { value = Math.round(value) + 'km' }
+        if (value < 1000) { value = Math.round(value) + 'm' } else { value = Math.round(value / 1000) + 'km' }
         return value
       }
     }
