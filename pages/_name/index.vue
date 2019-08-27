@@ -144,9 +144,8 @@ export default {
     }
   },
   asyncData ({ params, error }) {
-    return axios.get(`http://139.162.255.138/backend/api/landing/${params.name}/apps`)
+    return axios.get(`https://app.autoapps.dk/backend/api/landing/${params.name}/apps`)
       .then((res) => {
-        console.log(res.data)
         if (!res.data.total) {
           error({ statusCode: 404, message: 'Page not found' })
         }

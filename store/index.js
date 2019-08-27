@@ -35,7 +35,7 @@ export const actions = {
   getAppList ({ state, commit }, payLoad) {
     const lat = state.myLocation.latitude
     const lon = state.myLocation.longitude
-    const url = `http://139.162.255.138/backend/api/landing/${payLoad.name}/apps`
+    const url = `https://app.autoapps.dk/backend/api/landing/${payLoad.name}/apps`
     return axios.get(url, {
       params: payLoad.zip ? {
         lat,
