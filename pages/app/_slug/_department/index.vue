@@ -2,7 +2,7 @@
   <section class="section is-paddingless has-text-centered app-wrapper">
     <div class="body">
       <div class="app-image-wrapper">
-        <div class="iphone-background"></div>
+        <div class="iphone-background" />
         <figure class="image">
           <!-- <img v-if="window.width >= 640" src="/graphics_iphone_2x.png" alt="iPhone-Frame"> -->
           <img src="/graphics_iphone.png" alt="iPhone-Frame">
@@ -14,7 +14,7 @@
             <figure class="image is-80x80">
               <img
                 class="box is-paddingless"
-                :src="appItem.app_icon"
+                :src="appItem.app_icon.replace('http:', '')"
                 alt="App Icon"
               >
             </figure>
@@ -121,15 +121,15 @@ export default {
       title: appItem.app_name,
       meta: [
         { name: 'description', content: appItem.description },
-        { name: 'image', content: appItem.app_icon },
+        { name: 'image', content: appItem.app_icon.replace('http:', '') },
         { itemprop: 'name', content: appItem.app_name },
         { itemprop: 'description', content: appItem.description },
-        { itemprop: 'image', content: appItem.app_icon },
+        { itemprop: 'image', content: appItem.app_icon.replace('http:', '') },
         { name: 'apple-itunes-app', content: `app-id=${this.appStoreId}` },
         { name: 'google-play-app', content: this.googlePlayId },
         { property: 'og:title', content: appItem.app_name },
         { property: 'og:description', content: appItem.description },
-        { property: 'og:image', content: appItem.app_icon },
+        { property: 'og:image', content: appItem.app_icon.replace('http:', '') },
         { property: 'og:url', content: this.$route.fullPath },
         { property: 'og:site_name', content: appItem.app_name },
         { property: 'og:locale', content: 'da_DK' },
@@ -148,11 +148,11 @@ export default {
   mounted () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
-    this.dashboardImage = this.appItem.departments[0].info.dashboard_background_image
+    this.dashboardImage = this.appItem.departments[0].info.dashboard_background_image.replace('http:', '')
     if (this.appItem.departments.length > 1) {
       let i = 1
       setInterval(() => {
-        this.dashboardImage = this.appItem.departments[i].info.dashboard_background_image
+        this.dashboardImage = this.appItem.departments[i].info.dashboard_background_image.replace('http:', '')
         i = (i + 1) % this.appItem.departments.length
       }, 10000)
     }

@@ -150,7 +150,7 @@ export default {
           error({ statusCode: 404, message: 'Page not found' })
         }
         return {
-          brandLogo: res.data.brand_logo
+          brandLogo: res.data.brand_logo.replace('http:', '')
         }
       })
       .catch((e) => {
@@ -161,13 +161,13 @@ export default {
     return {
       title: this.brandName,
       meta: [
-        { name: 'image', content: this.brandLogo },
+        { name: 'image', content: this.brandLogo.replace('http:', '') },
         { itemprop: 'name', content: this.brandName },
         { itemprop: 'description', content: process.env.npm_package_description },
-        { itemprop: 'image', content: this.brandLogo },
+        { itemprop: 'image', content: this.brandLogo.replace('http:', '') },
         { property: 'og:title', content: this.brandName },
         { property: 'og:description', content: process.env.npm_package_description },
-        { property: 'og:image', content: this.brandLogo },
+        { property: 'og:image', content: this.brandLogo.replace('http:', '') },
         { property: 'og:url', content: this.$route.fullPath },
         { property: 'og:site_name', content: this.brandName },
         { property: 'og:locale', content: 'da_DK' },
