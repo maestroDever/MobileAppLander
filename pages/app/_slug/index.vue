@@ -2,7 +2,7 @@
   <section class="section is-paddingless has-text-centered app-wrapper">
     <div class="body">
       <div class="app-image-wrapper">
-        <div class="iphone-background"></div>
+        <div class="iphone-background" />
         <figure class="image">
           <!-- <img v-if="window.width >= 640" src="/graphics_iphone_2x.png" alt="iPhone-Frame"> -->
           <img src="/graphics_iphone.png" alt="iPhone-Frame">
