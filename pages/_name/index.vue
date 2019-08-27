@@ -36,7 +36,7 @@
           >
             Vis nærmeste først
           </h3>
-          <span class="is-pulled-right" style="padding-top: 1rem;">
+          <span class="is-pulled-right toggle-distance-sort" style="padding-top: 1rem;">
             <input
               id="isDistanceSort"
               ref="sortChecker"
@@ -48,6 +48,9 @@
             >
             <label for="isDistanceSort" />
           </span>
+          <div v-if="!$store.state.myLocation.latitude" class="blocked-notification">
+            Geolocation is blocked. To use sort functionality, you will have to first enable Geolocation on the browser.
+          </div>
         </div>
       </div>
       <div class="field">
@@ -55,8 +58,10 @@
           <input
             v-model="zipCode"
             class="input is-large is-4"
-            type="text"
+            type="number"
+            maxlength="4"
             placeholder="Indtast postnummer"
+            @input="restrictInput"
           >
           <span class="icon is-large is-size-4 is-left">
             <font-awesome-icon icon="search" class="color-skyblue" />
@@ -88,6 +93,7 @@
       </ul>
     </section>
     <v-pagination
+      v-if="appList.length"
       v-model="curPage"
       :page-count="pageCount"
       @input="gotoPage"
@@ -140,7 +146,6 @@ export default {
   asyncData ({ params, error }) {
     return axios.get(`https://app.autoapps.dk/backend/api/landing/${params.name}/apps`)
       .then((res) => {
-        console.log(res.data)
         if (!res.data.total) {
           error({ statusCode: 404, message: 'Page not found' })
         }
@@ -251,6 +256,12 @@ export default {
           name: this.brandName,
           pageNum
         })
+    },
+    restrictInput (evt) {
+      if (this.zipCode.length > 4) {
+        evt.preventDefault()
+        this.zipCode = this.zipCode.slice(0, 4)
+      }
     }
   }
 }
@@ -289,7 +300,7 @@ export default {
       }
     }
     .suzuki {
-      font-family: "SuzukiPRORegular";
+      font-family: "SuzukiPROHeadline";
     }
 
     .hero:not(.suzuki) {

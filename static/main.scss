@@ -1,5 +1,5 @@
-@font-face {font-family: "SuzukiPRORegular";
-  src: url("./SuzukiPRORegular.ttf") format("truetype");
+@font-face {font-family: "SuzukiPROHeadline";
+  src: url("./SuzukiPROHeadline.ttf") format("truetype");
 }
 
 $skyblue: #009bde;
@@ -64,4 +64,30 @@ body {
 }
 .fade-enter-to, .fade-leave {
   opacity: 1;
+}
+
+/* remove input[type=number] spin buttons */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0; 
+}
+
+
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+/* remove outline on chrome */
+input:focus,
+button:focus {
+  outline: none;
+}
+
+.blocked-notification {
+  display: none;
+  font-size: 12px;
+}
+.toggle-distance-sort:hover + div.blocked-notification {
+  display: block;
 }
