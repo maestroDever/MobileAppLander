@@ -49,7 +49,7 @@
             <label for="isDistanceSort" />
           </span>
           <div v-if="!$store.state.myLocation.latitude" class="blocked-notification">
-            Geolocation is blocked. To use sort functionality, you will have to first enable Geolocation on the browser.
+            Geolocation er blokeret. For at kunne sortere efter nærmeste skal du først aktivere Geolocation i browseren.
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
             type="number"
             maxlength="4"
             placeholder="Indtast postnummer"
-            @input="restrictInput"
+            @keypress="preventKeypress"
           >
           <span class="icon is-large is-size-4 is-left">
             <font-awesome-icon icon="search" class="color-skyblue" />
@@ -257,10 +257,14 @@ export default {
           pageNum
         })
     },
-    restrictInput (evt) {
-      if (this.zipCode.length > 4) {
-        evt.preventDefault()
-        this.zipCode = this.zipCode.slice(0, 4)
+    preventKeypress (evt) {
+      if (!isNumberKey(evt) || this.zipCode.valueAsNumber > 9999) {
+        console.log('prevented')
+        evt.preventDefault() // Then don't write it!
+      }
+      function isNumberKey (evt) {
+        const charCode = (evt.which) ? evt.which : evt.keyCode
+        return !(charCode > 31 && (charCode < 48 || charCode > 57))
       }
     }
   }

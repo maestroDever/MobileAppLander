@@ -33,26 +33,35 @@ export const mutations = {
 
 export const actions = {
   getAppList ({ state, commit }, payLoad) {
-    const lat = state.myLocation.latitude
-    const lon = state.myLocation.longitude
+    let lat = state.myLocation.latitude
+    let lon = state.myLocation.longitude
     const url = `https://app.autoapps.dk/backend/api/landing/${payLoad.name}/apps`
-    return axios.get(url, {
-      params: payLoad.zip ? {
-        lat,
-        lon,
-        per_page: 5,
-        offset: (payLoad.pageNum - 1) * 5,
-        zip: payLoad.zip
-      } : {
-        lat,
-        lon,
-        per_page: 5,
-        offset: (payLoad.pageNum - 1) * 5
-      }
-    })
-      .then((res) => {
-        commit('setAppList', res.data)
+    if (payLoad.zip && payLoad.zip.length === 4) {
+      axios.get(`https://dawa.aws.dk/postnumre/${payLoad.zip}`).then((res) => {
+        lat = res.data.visueltcenter[1]
+        lon = res.data.visueltcenter[0]
+      }).then((res) => {
+      }).catch(function (error) {
+        console.log('Postnummer er ikke korrekt ', error)
+      }).finally(function () {
+        return load()
       })
+    } else {
+      return load()
+    }
+    function load () {
+      return axios.get(url, {
+        params: {
+          lat,
+          lon,
+          per_page: 10,
+          offset: (payLoad.pageNum - 1) * 10
+        }
+      })
+        .then((res) => {
+          commit('setAppList', res.data)
+        })
+    }
   }
 }
 
