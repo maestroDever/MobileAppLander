@@ -13,7 +13,7 @@
           <div class="app-icon-wrapper">
             <figure class="image is-80x80">
               <img
-                class="box is-paddingless"
+                class="is-paddingless"
                 :src="appItem.app_icon.replace('http:', '')"
                 alt="App Icon"
               >
@@ -22,7 +22,7 @@
               {{ appItem.app_name }}
             </div>
             <div class="company-name">
-              {{ companyName }}
+              {{ departmentName }}
             </div>
           </div>
           <div class="gradient" />
@@ -96,8 +96,8 @@ export default {
     }
   },
   computed: {
-    companyName () {
-      return this.appItem.departments && this.appItem.departments[0].company_name
+    departmentName () {
+      return this.appItem.departments && this.appItem.departments.length > 1 ? '' : this.appItem.departments[0].name
     },
     appStoreId () {
       return this.appItem.app_store_link && this.appItem.app_store_link.match(/id([\d]{10,})/g)[0]
