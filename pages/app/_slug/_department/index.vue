@@ -100,10 +100,14 @@ export default {
       return this.appItem.departments && this.appItem.departments.length > 1 ? '' : this.appItem.departments[0].name
     },
     appStoreId () {
-      return this.appItem.app_store_link && this.appItem.app_store_link.match(/id([\d]{10,})/g)[0]
+      const appStoreLink = this.appItem.app_store_link
+      const match = appStoreLink && appStoreLink.match(/id([\d]{10,})/g)
+      if (match && match.length) { return match[0] } else { return null }
     },
     googlePlayId () {
-      return this.appItem.google_play_link && this.appItem.google_play_link.match(/id=([^&]+)/g)[0]
+      const googlePlayLink = this.appItem.google_play_link
+      const match = googlePlayLink.match(/id=([^&]+)/g)
+      if (match && match.length) { return match[0] } else { return null }
     }
   },
   asyncData ({ params, error }) {
