@@ -98,7 +98,9 @@
       :page-count="pageCount"
       @input="gotoPage"
     />
-    <div class="poweredby"><span class="ualogo"></span><p>Powered by <a href="https://universalapps.dk" target="_blank">Universal Apps ApS</a></p></div>
+    <div class="poweredby">
+      <span class="ualogo" /><p>Powered by <a href="https://universalapps.dk" target="_blank">Universal Apps ApS</a></p>
+    </div>
   </section>
 </template>
 
@@ -260,7 +262,6 @@ export default {
     },
     preventKeypress (evt) {
       if (!isNumberKey(evt) || this.zipCode.valueAsNumber > 9999) {
-        console.log('prevented')
         evt.preventDefault() // Then don't write it!
       }
       function isNumberKey (evt) {
