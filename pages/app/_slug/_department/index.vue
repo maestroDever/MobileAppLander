@@ -22,7 +22,7 @@
               {{ appItem.app_name }}
             </div>
             <div class="company-name">
-              {{ departmentName }}
+
             </div>
           </div>
           <div class="gradient" />
@@ -34,10 +34,10 @@
         Få personlig service med vores app. Hent appen for at komme i gang.
       </div>
       <div class="buttons">
-        <a :href="appItem.app_store_link">
+        <a v-if="appStoreId"  :href="appItem.app_store_link">
           <img class="store-link" src="/app-store-1.png" alt="App Store Button">
         </a>
-        <a :href="appItem.google_play_link">
+        <a v-if="googlePlayId"  :href="appItem.google_play_link">
           <img class="store-link" src="/google-play-store-1.png" alt="Google Play Button">
         </a>
       </div>
@@ -46,22 +46,24 @@
       </div>
     </div>
 
-    <div v-if="deviceType === 'Desktop' || !deviceType" class="post-footer">
+    <div v-if="(appStoreId || googlePlayId ) && (deviceType === 'Desktop' || !deviceType)" class="post-footer">
       <div class="text has-text-weight-bold">
         Hent appen ved at scanne QR koden med din smartphone
       </div>
       <div class="column is-full-desktop">
         <button
-          class="button"
-          :class="{'active': qrFor === 'ios'}"
-          @click="setQR('ios')"
+                class="button"
+                v-if="appStoreId"
+                :class="{'active': qrFor === 'ios'}"
+                @click="setQR('ios')"
         >
           iOS
         </button>
         <button
-          class="button"
-          :class="{'active': qrFor === 'android'}"
-          @click="setQR('android')"
+                class="button"
+                v-if="googlePlayId"
+                :class="{'active': qrFor === 'android'}"
+                @click="setQR('android')"
         >
           Android
         </button>
@@ -102,7 +104,10 @@ export default {
     appStoreId () {
       const appStoreLink = this.appItem.app_store_link
       const match = appStoreLink && appStoreLink.match(/id([\d]{10,})/g)
-      if (match && match.length) { return match[0] } else { return null }
+      if (match && match.length) { return match[0] } else {
+        this.setQR('android')
+        return null
+      }
     },
     googlePlayId () {
       const googlePlayLink = this.appItem.google_play_link
@@ -152,12 +157,12 @@ export default {
   mounted () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
-    this.dashboardImage = this.appItem.departments[0].info.dashboard_background_image.replace('http:', '')
-    if (this.appItem.departments.length > 1) {
+    this.dashboardImage = this.appItem.departments && this.appItem.departments[0].info.dashboard_background_image.replace('http:', '')
+    if (this.appItem.departments && this.appItem.departments.length > 1) {
       let i = 1
       setInterval(() => {
-        this.dashboardImage = this.appItem.departments[i].info.dashboard_background_image.replace('http:', '')
-        i = (i + 1) % this.appItem.departments.length
+        this.dashboardImage = this.appItem.departments && this.appItem.departments[i].info.dashboard_background_image.replace('http:', '')
+        i = (i + 1) % (this.appItem.departments && this.appItem.departments.length)
       }, 10000)
     }
 
