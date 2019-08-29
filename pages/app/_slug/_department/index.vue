@@ -22,7 +22,7 @@
               {{ appItem.app_name }}
             </div>
             <div class="company-name">
-
+              {{ departmentName }}
             </div>
           </div>
           <div class="gradient" />
