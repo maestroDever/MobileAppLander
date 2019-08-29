@@ -98,6 +98,9 @@
       :page-count="pageCount"
       @input="gotoPage"
     />
+    <div class="poweredby">
+      <span class="ualogo" /><p>Powered by <a href="https://universalapps.dk" target="_blank">Universal Apps ApS</a></p>
+    </div>
   </section>
 </template>
 
@@ -259,7 +262,6 @@ export default {
     },
     preventKeypress (evt) {
       if (!isNumberKey(evt) || this.zipCode.valueAsNumber > 9999) {
-        console.log('prevented')
         evt.preventDefault() // Then don't write it!
       }
       function isNumberKey (evt) {
@@ -305,6 +307,23 @@ export default {
     }
     .suzuki {
       font-family: "SuzukiPROHeadline";
+    }
+    .poweredby {
+      text-align: center;
+      margin-top: 5rem;
+      * {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .ualogo {
+        background: url("https://www.universalapps.dk/assets/img/universalapps_logo.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 20px;
+        width: 105px;
+        border-right: 1px solid #ccc;
+        margin-right: 5px;
+      }
     }
 
     .hero:not(.suzuki) {

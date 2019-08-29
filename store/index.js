@@ -30,7 +30,6 @@ export const mutations = {
     state.isSort = data
   }
 }
-
 export const actions = {
   getAppList ({ state, commit }, payLoad) {
     let lat = state.myLocation.latitude
@@ -64,7 +63,6 @@ export const actions = {
     }
   }
 }
-
 export const getters = {
   appList: (state) => {
     if (state.isSort) {
