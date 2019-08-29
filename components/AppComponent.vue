@@ -4,7 +4,7 @@
       <figure class="image">
         <img
           class="image is-60x60"
-          :src="appItem.app_icon.replace('http:', '')"
+          :src="appItem.company_logo && appItem.company_logo.replace('http:', '')"
           :alt="appItem.app_name"
         >
       </figure>
@@ -57,6 +57,8 @@ export default {
 <style lang="scss" scoped>
   .image-wrapper {
     margin: 1.4rem;
+    padding-right: 1rem;
+    border-right: 1px solid #ccc;
   }
 
   .container {
