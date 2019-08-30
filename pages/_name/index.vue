@@ -310,7 +310,7 @@ export default {
     }
     .poweredby {
       text-align: center;
-      margin-top: 5rem;
+      margin: 5rem 0;
       * {
         display: inline-block;
         vertical-align: middle;

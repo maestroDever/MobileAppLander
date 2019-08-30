@@ -73,6 +73,9 @@
         </figure>
       </div>
     </div>
+    <div class="poweredby">
+      <span class="ualogo" /><p>Powered by <a href="https://universalapps.dk" target="_blank">Universal Apps ApS</a></p>
+    </div>
   </section>
 </template>
 
@@ -342,6 +345,23 @@ export default {
         color: #fff;
         border: none;
       }
+    }
+  }
+  .poweredby {
+    text-align: center;
+    margin: 5rem 0;
+    * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .ualogo {
+      background: url("https://www.universalapps.dk/assets/img/universalapps_logo.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 20px;
+      width: 105px;
+      border-right: 1px solid #ccc;
+      margin-right: 5px;
     }
   }
 </style>
