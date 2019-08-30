@@ -102,7 +102,7 @@ export default {
     },
     appStoreId () {
       const appStoreLink = this.appItem.app_store_link
-      const match = appStoreLink && appStoreLink.match(/id([\d]{10,})/g)
+      const match = appStoreLink && appStoreLink.match(/id(\d+)/)
       if (match && match.length) { return match[0] } else {
         this.setQR('android')
         return null
@@ -110,8 +110,9 @@ export default {
     },
     googlePlayId () {
       const googlePlayLink = this.appItem.google_play_link
-      const match = googlePlayLink.match(/id=([^&]+)/g)
-      if (match && match.length) { return match[0] } else { return null }
+      const regx = /id=([^&]+)/g
+      const match = regx.exec(googlePlayLink)
+      if (match && match.length) { return match[1] } else { return null }
     }
   },
   asyncData ({ params, error }) {
