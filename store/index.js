@@ -10,7 +10,8 @@ export const state = () => ({
   },
   deviceType: null,
   isSort: false,
-  total: 1
+  total: 1,
+  perPage: 10
 })
 
 export const mutations = {
@@ -53,8 +54,8 @@ export const actions = {
         params: {
           lat,
           lon,
-          per_page: 10,
-          offset: (payLoad.pageNum - 1) * 10
+          per_page: state.perPage,
+          offset: (payLoad.pageNum - 1) * state.perPage
         }
       })
         .then((res) => {

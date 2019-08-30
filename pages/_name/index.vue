@@ -133,7 +133,7 @@ export default {
       }
     },
     pageCount () {
-      return Math.ceil(this.$store.state.total / 5)
+      return Math.ceil(this.$store.state.total / this.$store.state.perPage)
     }
   },
   watch: {
