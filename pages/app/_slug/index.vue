@@ -51,16 +51,16 @@
       </div>
       <div class="column is-full-desktop">
         <button
-          class="button"
           v-if="appStoreId"
+          class="button"
           :class="{'active': qrFor === 'ios'}"
           @click="setQR('ios')"
         >
           iOS
         </button>
         <button
-          class="button"
           v-if="googlePlayId"
+          class="button"
           :class="{'active': qrFor === 'android'}"
           @click="setQR('android')"
         >
@@ -178,9 +178,9 @@ export default {
     if (!this.$route.query.hasOwnProperty('show')) {
       this.$nextTick(function () {
         if (this.deviceType === 'Apple') {
-          window.location.href = this.appItem.app_store_link
+          window.location.href = this.appItem.app_store_link && this.appItem.app_store_link
         } else if (this.deviceType === 'Android') {
-          window.location.href = this.appItem.google_play_link
+          window.location.href = this.appItem.google_play_link && this.appItem.google_play_link
         }
       })
     }

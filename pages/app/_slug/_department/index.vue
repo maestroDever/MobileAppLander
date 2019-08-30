@@ -34,10 +34,10 @@
         Få personlig service med vores app. Hent appen for at komme i gang.
       </div>
       <div class="buttons">
-        <a v-if="appStoreId"  :href="appItem.app_store_link">
+        <a v-if="appStoreId" :href="appItem.app_store_link">
           <img class="store-link" src="/app-store-1.png" alt="App Store Button">
         </a>
-        <a v-if="googlePlayId"  :href="appItem.google_play_link">
+        <a v-if="googlePlayId" :href="appItem.google_play_link">
           <img class="store-link" src="/google-play-store-1.png" alt="Google Play Button">
         </a>
       </div>
@@ -52,18 +52,18 @@
       </div>
       <div class="column is-full-desktop">
         <button
-                class="button"
-                v-if="appStoreId"
-                :class="{'active': qrFor === 'ios'}"
-                @click="setQR('ios')"
+          v-if="appStoreId"
+          class="button"
+          :class="{'active': qrFor === 'ios'}"
+          @click="setQR('ios')"
         >
           iOS
         </button>
         <button
-                class="button"
-                v-if="googlePlayId"
-                :class="{'active': qrFor === 'android'}"
-                @click="setQR('android')"
+          v-if="googlePlayId"
+          class="button"
+          :class="{'active': qrFor === 'android'}"
+          @click="setQR('android')"
         >
           Android
         </button>
@@ -179,9 +179,9 @@ export default {
     if (!this.$route.query.hasOwnProperty('show')) {
       this.$nextTick(function () {
         if (this.deviceType === 'Apple') {
-          window.location.href = this.appItem.app_store_link
+          window.location.href = this.appItem.app_store_link && this.appItem.app_store_link
         } else if (this.deviceType === 'Android') {
-          window.location.href = this.appItem.google_play_link
+          window.location.href = this.appItem.google_play_link && this.appItem.google_play_link
         }
       })
     }
@@ -284,11 +284,14 @@ export default {
 
     &--title {
       width: 32rem;
+      font-size: 2.3em !important;
+      font-weight: bold;
+      line-height: 1.2em !important;
     }
 
     .description {
       max-width: 40rem;
-      white-space: pre-wrap;
+      white-space: pre-line;
       text-align: left;
       tab-size: 4;
     }
