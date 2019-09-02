@@ -145,7 +145,13 @@ export default {
         return this.$store.state.isSort
       },
       set (val) {
-        this.$store.commit('sortApp', val)
+        this.$store.commit('sortApp')
+        this.$store.dispatch('getAppList', {
+          name: this.brandName,
+          pageNum: this.curPage,
+          isSort: val,
+          zip: this.zipCode
+        })
       }
     },
     pageCount () {
@@ -158,7 +164,8 @@ export default {
       this.$store.dispatch('getAppList', {
         name: this.brandName,
         zip: value,
-        pageNum: 1
+        pageNum: 1,
+        isSort: this.isSortbyDistance
       })
     }
   },
@@ -222,10 +229,6 @@ export default {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         })
-        this.$store.dispatch('getAppList', {
-          name: this.brandName,
-          pageNum: 1
-        })
         this.isSortbyDistance = true
       }, () => {
         clearTimeout(locationTimeout)
@@ -236,10 +239,7 @@ export default {
       })
     } else {
       // Fallback for no geolocation
-      this.$store.commit('setLocation', {
-        latitude: '',
-        longitude: ''
-      })
+      this.isSortbyDistance = false
     }
     this.$store.dispatch('getAppList', {
       name: this.brandName,
@@ -266,15 +266,12 @@ export default {
       }
     },
     gotoPage (pageNum) {
-      this.$store.dispatch('getAppList',
-        this.zipCode ? {
-          name: this.brandName,
-          pageNum,
-          zip: this.zipCode
-        } : {
-          name: this.brandName,
-          pageNum
-        })
+      this.$store.dispatch('getAppList', {
+        name: this.brandName,
+        pageNum,
+        zip: this.zipCode,
+        isSort: this.isSortbyDistance
+      })
     },
     preventKeypress (evt) {
       if (!isNumberKey(evt) || this.zipCode.valueAsNumber > 9999) {
