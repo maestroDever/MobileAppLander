@@ -22,7 +22,7 @@
         <br>
         {{ appItem.department_info.zip }}
         {{ appItem.department_info.city }}
-        <span class="is-pulled-right">
+        <span v-if="showDistance" class="is-pulled-right">
           {{ appItem.distance | distanceFilter }}
         </span>
       </p>
