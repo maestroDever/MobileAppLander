@@ -83,3 +83,9 @@ input:focus,
 button:focus {
   outline: none;
 }
+
+.pagination-link--active {
+  font-weight: bold;
+  color: darken(#363636, 50%);
+  border: 2px solid darken($color: #dbdbdb, $amount: 50%);
+}
