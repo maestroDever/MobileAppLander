@@ -204,16 +204,6 @@ export default {
     }
   },
   mounted () {
-    let deviceType = 'Desktop'
-    if (this.$device.isMobile || this.$device.isTablet) {
-      if (this.$device.isIos) {
-        deviceType = 'Apple'
-      } else {
-        deviceType = 'Android'
-      }
-    } else if (this.$device.isDesktop) { deviceType = 'Desktop' }
-    this.$store.commit('setDevice', deviceType)
-
     if (navigator.geolocation) {
       const locationTimeout = setTimeout(() => {
         this.$store.commit('setLocation', {
