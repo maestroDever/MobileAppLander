@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     departmentName () {
-      return this.appItem.departments && this.appItem.departments.length > 1 ? '' : this.appItem.departments[0].name
+      return this.appItem.departments && this.appItem.departments.length >= 1 ? this.appItem.departments[0].name : ''
     },
     appStoreId () {
       const appStoreLink = this.appItem.app_store_link
