@@ -36,7 +36,7 @@
           >
             Vis nærmeste først
           </h3>
-          <span class="is-pulled-right toggle-distance-sort" style="padding-top: 1rem;">
+          <span class="is-pulled-right toggle-distance-sort" style="padding-top: 1rem;" @click="onToggle">
             <input
               id="isDistanceSort"
               ref="sortChecker"
@@ -48,9 +48,6 @@
             >
             <label for="isDistanceSort" />
           </span>
-          <div v-if="!$store.state.myLocation.latitude" class="blocked-notification">
-            Geolocation er blokeret. For at kunne sortere efter nærmeste skal du først aktivere Geolocation i browseren.
-          </div>
         </div>
       </div>
       <div class="field">
@@ -101,6 +98,24 @@
     <div class="poweredby">
       <span class="ualogo" /><p>Powered by <a href="https://universalapps.dk" target="_blank">Universal Apps ApS</a></p>
     </div>
+    <transition name="fade" mode="out-in">
+      <div v-if="showModal" class="overlay" @click="showModal = false">
+        <div class="info">
+          <span class="info--close" @click="showModal = false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 24 24">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#7F7F7F" />
+              <path d="M0 0h24v24H0z" fill="none" />
+            </svg>
+          </span>
+          <!-- <h3 class="info--title">
+            Advarsel
+          </h3> -->
+          <p class="info--text">
+            Geolocation er blokeret. For at kunne sortere efter nærmeste skal du først aktivere Geolocation i browseren.
+          </p>
+        </div>
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -117,7 +132,8 @@ export default {
     return {
       brandName: this.$route.params.name,
       zipCode: '',
-      curPage: 1
+      curPage: 1,
+      showModal: false
     }
   },
   computed: {
@@ -129,11 +145,17 @@ export default {
         return this.$store.state.isSort
       },
       set (val) {
-        this.$store.commit('sortApp', val)
+        this.$store.commit('sortApp')
+        this.$store.dispatch('getAppList', {
+          name: this.brandName,
+          pageNum: this.curPage,
+          isSort: val,
+          zip: this.zipCode
+        })
       }
     },
     pageCount () {
-      return Math.ceil(this.$store.state.total / 5)
+      return Math.ceil(this.$store.state.total / this.$store.state.perPage)
     }
   },
   watch: {
@@ -142,7 +164,8 @@ export default {
       this.$store.dispatch('getAppList', {
         name: this.brandName,
         zip: value,
-        pageNum: 1
+        pageNum: 1,
+        isSort: this.isSortbyDistance
       })
     }
   },
@@ -181,16 +204,6 @@ export default {
     }
   },
   mounted () {
-    let deviceType = 'Desktop'
-    if (this.$device.isMobile || this.$device.isTablet) {
-      if (this.$device.isIos) {
-        deviceType = 'Apple'
-      } else {
-        deviceType = 'Android'
-      }
-    } else if (this.$device.isDesktop) { deviceType = 'Desktop' }
-    this.$store.commit('setDevice', deviceType)
-
     if (navigator.geolocation) {
       const locationTimeout = setTimeout(() => {
         this.$store.commit('setLocation', {
@@ -206,10 +219,6 @@ export default {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         })
-        this.$store.dispatch('getAppList', {
-          name: this.brandName,
-          pageNum: 1
-        })
         this.isSortbyDistance = true
       }, () => {
         clearTimeout(locationTimeout)
@@ -220,10 +229,7 @@ export default {
       })
     } else {
       // Fallback for no geolocation
-      this.$store.commit('setLocation', {
-        latitude: '',
-        longitude: ''
-      })
+      this.isSortbyDistance = false
     }
     this.$store.dispatch('getAppList', {
       name: this.brandName,
@@ -250,15 +256,12 @@ export default {
       }
     },
     gotoPage (pageNum) {
-      this.$store.dispatch('getAppList',
-        this.zipCode ? {
-          name: this.brandName,
-          pageNum,
-          zip: this.zipCode
-        } : {
-          name: this.brandName,
-          pageNum
-        })
+      this.$store.dispatch('getAppList', {
+        name: this.brandName,
+        pageNum,
+        zip: this.zipCode,
+        isSort: this.isSortbyDistance
+      })
     },
     preventKeypress (evt) {
       if (!isNumberKey(evt) || this.zipCode.valueAsNumber > 9999) {
@@ -268,6 +271,9 @@ export default {
         const charCode = (evt.which) ? evt.which : evt.keyCode
         return !(charCode > 31 && (charCode < 48 || charCode > 57))
       }
+    },
+    onToggle () {
+      if (!this.$store.state.myLocation.latitude) { this.showModal = true }
     }
   }
 }
@@ -277,6 +283,8 @@ export default {
   @import '../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css';
   #page-index {
     margin-bottom: 25rem;
+    position: relative;
+
     .logo {
       &--image {
         position: absolute;
@@ -368,5 +376,49 @@ export default {
   }
   .small-margin {
     margin: 1.5rem;
+  }
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+    position: absolute;
+    top: 0;
+
+    .info {
+      text-align: center;
+      font-family: Arial;
+      padding: 2em;
+      top: 50vh !important;
+      height: auto !important;
+      padding: 20px;
+      left: 50% !important;
+      transform: translate(-50%, -50%);
+      position: relative;
+      max-width: 45em;
+      background-color: #fff;
+      box-sizing: border-box;
+
+      @media screen and (max-width: 600px) {
+        width: calc(100% - 30px) !important;
+      }
+
+      &--title {
+        font-size: 24px;
+      }
+
+      &--text {
+        text-align: left;
+        white-space: pre-line;
+        font-size: 16px;
+      }
+
+      &--close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        cursor: pointer;
+      }
+    }
   }
 </style>

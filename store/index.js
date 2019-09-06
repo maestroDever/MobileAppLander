@@ -10,7 +10,8 @@ export const state = () => ({
   },
   deviceType: null,
   isSort: false,
-  total: 1
+  total: 1,
+  perPage: 10
 })
 
 export const mutations = {
@@ -26,14 +27,14 @@ export const mutations = {
   setDevice (state, type) {
     state.deviceType = type
   },
-  sortApp (state, data) {
-    state.isSort = data
+  sortApp (state) {
+    state.isSort = !state.isSort
   }
 }
 export const actions = {
   getAppList ({ state, commit }, payLoad) {
-    let lat = state.myLocation.latitude
-    let lon = state.myLocation.longitude
+    let lat = payLoad.isSort ? state.myLocation.latitude : ''
+    let lon = payLoad.isSort ? state.myLocation.longitude : ''
     const url = `https://app.autoapps.dk/backend/api/landing/${payLoad.name}/apps`
     if (payLoad.zip && payLoad.zip.length === 4) {
       axios.get(`https://dawa.aws.dk/postnumre/${payLoad.zip}`).then((res) => {
@@ -53,8 +54,8 @@ export const actions = {
         params: {
           lat,
           lon,
-          per_page: 10,
-          offset: (payLoad.pageNum - 1) * 10
+          per_page: state.perPage,
+          offset: (payLoad.pageNum - 1) * state.perPage
         }
       })
         .then((res) => {
@@ -65,14 +66,6 @@ export const actions = {
 }
 export const getters = {
   appList: (state) => {
-    if (state.isSort) {
-      return [...state.myApps].sort((a, b) => {
-        return b.distance - a.distnace
-      })
-    } else {
-      return [...state.myApps].sort((a, b) => {
-        return (a.app_name > b.app_name) ? 1 : -1
-      })
-    }
+    return state.myApps
   }
 }
