@@ -21,7 +21,7 @@ export default {
       return this.appItem.departments && this.appItem.departments.length >= 1 ? this.appItem.departments[0].name : ''
     },
     departmentImage () {
-      return this.appItem.departments && this.appItem.departments.length >= 1 ? this.appItem.departments[0].info.dashboard_background_image.replace('http:', '') : ''
+      return this.appItem.departments && this.appItem.departments.length >= 1 ? this.appItem.departments[0].info.dashboard_background_image.replace('http://', 'https://') : ''
     },
     appStoreId () {
       const appStoreLink = this.appItem.app_store_link
@@ -53,7 +53,7 @@ export default {
         { property: 'og:title', content: appItem.app_name },
         { property: 'og:description', content: appItem.description },
         { property: 'og:image', content: this.departmentImage },
-        { property: 'og:url', content: '//find.autoapps.dk' + this.$route.fullPath },
+        { property: 'og:url', content: 'https://find.autoapps.dk' + this.$route.fullPath },
         { property: 'og:site_name', content: appItem.app_name },
         { property: 'og:locale', content: 'da_DK' },
         { property: 'fb:admins', content: '1061564169' },
