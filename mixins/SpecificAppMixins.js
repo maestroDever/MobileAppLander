@@ -20,10 +20,13 @@ export default {
     departmentName () {
       return this.appItem.departments && this.appItem.departments.length >= 1 ? this.appItem.departments[0].name : ''
     },
+    departmentImage () {
+      return this.appItem.departments && this.appItem.departments.length >= 1 ? this.appItem.departments[0].info.dashboard_background_image.replace('http:', '') : ''
+    },
     appStoreId () {
       const appStoreLink = this.appItem.app_store_link
       const match = appStoreLink && appStoreLink.match(/id(\d+)/)
-      if (match && match.length) { return match[0] } else {
+      if (match && match.length) { return match[1] } else {
         this.setQR('android')
         return null
       }
@@ -41,27 +44,27 @@ export default {
       title: appItem.app_name,
       meta: [
         { name: 'description', content: appItem.description },
-        { name: 'image', content: appItem.app_icon.replace('http:', '') },
+        { name: 'image', content: this.departmentImage },
         { itemprop: 'name', content: appItem.app_name },
         { itemprop: 'description', content: appItem.description },
-        { itemprop: 'image', content: appItem.app_icon.replace('http:', '') },
+        { itemprop: 'image', content: this.departmentImage },
         { name: 'apple-itunes-app', content: `app-id=${this.appStoreId}` },
         { name: 'google-play-app', content: this.googlePlayId },
         { property: 'og:title', content: appItem.app_name },
         { property: 'og:description', content: appItem.description },
-        { property: 'og:image', content: appItem.app_icon.replace('http:', '') },
-        { property: 'og:url', content: this.$route.fullPath },
+        { property: 'og:image', content: this.departmentImage },
+        { property: 'og:url', content: window.location.href },
         { property: 'og:site_name', content: appItem.app_name },
         { property: 'og:locale', content: 'da_DK' },
         { property: 'fb:admins', content: '1061564169' },
         { property: 'fb:app_id', content: '2307210935983207' },
         { property: 'og:type', content: 'website' },
-        { property: 'al:ios:app_store_id', content: `app-id=${this.appStoreId}` },
+        { property: 'al:ios:app_store_id', content: `${this.appStoreId}` },
         { property: 'al:ios:app_name', content: appItem.app_name },
-        { property: 'al:ios:url', content: `${appItem.app_slug}://` },
+        { property: 'al:ios:url', content: `${this.slug}://` },
         { property: 'al:android:package', content: this.googlePlayId },
         { property: 'al:android:app_name', content: appItem.app_name },
-        { property: 'al:android:url', content: `${appItem.app_slug}://` }
+        { property: 'al:android:url', content: `${this.slug}://` }
       ]
     }
   },
@@ -74,7 +77,7 @@ export default {
       setInterval(() => {
         this.dashboardImage = this.appItem.departments && this.appItem.departments[i].info.dashboard_background_image.replace('http:', '')
         i = (i + 1) % (this.appItem.departments && this.appItem.departments.length)
-      }, 10000)
+      }, 5000)
     }
 
     let deviceType = 'Desktop'
