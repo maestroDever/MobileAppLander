@@ -53,7 +53,7 @@ export default {
         { property: 'og:title', content: appItem.app_name },
         { property: 'og:description', content: appItem.description },
         { property: 'og:image', content: this.departmentImage },
-        { property: 'og:url', content: window.location.href },
+        { property: 'og:url', content: '//find.autoapps.dk' + this.$route.fullPath },
         { property: 'og:site_name', content: appItem.app_name },
         { property: 'og:locale', content: 'da_DK' },
         { property: 'fb:admins', content: '1061564169' },
