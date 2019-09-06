@@ -1,4 +1,6 @@
-
+const modifyHtml = (html) => {
+  return html.replace(/ data-n-head="true"/g, '')
+}
 export default {
   mode: 'universal',
   /*
@@ -49,13 +51,13 @@ export default {
     '@nuxtjs/axios',
     [
       'nuxt-fontawesome', {
-        imports: [
-          {
-            set: '@fortawesome/free-solid-svg-icons',
-            icons: ['fas']
-          }
-        ]
-      }
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['fas']
+        }
+      ]
+    }
     ],
     [
       '@nuxtjs/device',
@@ -93,6 +95,14 @@ export default {
           exclude: /(node_modules)/
         })
       }
+    }
+  },
+  hooks: {
+    'generate:page': (page) => {
+      page.html = modifyHtml(page.html)
+    },
+    'render:route': (url, page, { req, res }) => {
+      page.html = modifyHtml(page.html)
     }
   }
 }
